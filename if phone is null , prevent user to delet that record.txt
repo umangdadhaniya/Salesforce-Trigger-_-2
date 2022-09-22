@@ -1,0 +1,11 @@
+*/ if phone is null , prevent user to delet that record
+trigger NotDelete_record_If_Phone_Is_Blank on Contact (before delete) {
+    if(trigger.isbefore && trigger.isdelete){
+        for(contact co: trigger.old){
+            if(co.phone == NULL){
+                co.adderror('You can not delete this record');
+            }
+        }
+    }
+
+}
