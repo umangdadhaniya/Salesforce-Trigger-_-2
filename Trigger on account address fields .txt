@@ -1,0 +1,19 @@
+/*(new record) If   Rating = hot   =>  Billing address = Shipping address =>  Billing address into Description*/
+trigger update_Shipping_Add_And_Description on Account (before insert, before update) {
+    if(trigger.isExecuting && trigger.isbefore){
+        if(trigger.isInsert){
+            for(Account acc:trigger.new){
+                if(acc.Rating == 'Hot'){
+                    acc.ShippingCity = acc.BillingCity;
+                    acc.ShippingState = acc.BillingState;
+                    acc.ShippingCountry = acc.BillingCountry;
+                    acc.ShippingStreet = acc.BillingStreet;
+                    acc.ShippingPostalCode = acc.BillingPostalCode;
+                    acc.Description = acc.BillingStreet +''+ acc.BillingCity +''+ acc.BillingPostalCode +''+ acc.BillingState +''+ acc.BillingCountry;
+                    
+                }
+            }
+        }
+    }
+
+}
